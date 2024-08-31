@@ -17,11 +17,48 @@ function updateSnippetControls() {
     const container = document.getElementById('snippetControls');
     container.innerHTML = '';
     snippets.forEach((snippet, index) => {
+        const div = document.createElement('div');
+        div.className = 'snippet-control';
+        div.draggable = true;
+        div.setAttribute('data-index', index);
+
         const button = document.createElement('button');
         button.textContent = snippet.title || `Snippet ${index + 1}`;
         button.addEventListener('click', () => editSnippet(index));
-        container.appendChild(button);
+
+        const preview = document.createElement('span');
+        preview.textContent = snippet.code.substring(0, 30) + '...';
+
+        div.appendChild(button);
+        div.appendChild(preview);
+
+        div.addEventListener('dragstart', dragStart);
+        div.addEventListener('dragover', dragOver);
+        div.addEventListener('drop', drop);
+
+        container.appendChild(div);
     });
+}
+
+function dragStart(e) {
+    e.dataTransfer.setData('text/plain', e.target.getAttribute('data-index'));
+}
+
+function dragOver(e) {
+    e.preventDefault();
+}
+
+function drop(e) {
+    e.preventDefault();
+    const fromIndex = parseInt(e.dataTransfer.getData('text/plain'));
+    const toIndex = parseInt(e.target.closest('.snippet-control').getAttribute('data-index'));
+    
+    if (fromIndex !== toIndex) {
+        const [movedSnippet] = snippets.splice(fromIndex, 1);
+        snippets.splice(toIndex, 0, movedSnippet);
+        saveSnippets();
+        updateSnippetControls();
+    }
 }
 
 function editSnippet(index) {
@@ -32,6 +69,18 @@ function editSnippet(index) {
     document.getElementById('snippetCode').value = snippet.code || '';
     document.getElementById('postSnippetText').value = snippet.postText || '';
     document.getElementById('lineNumber').value = snippet.lineNumber || '';
+    updatePreview(snippet);
+}
+
+function updatePreview(snippet) {
+    const previewContent = document.getElementById('previewContent');
+    previewContent.innerHTML = `
+        <h3>${snippet.title || 'Untitled Snippet'}</h3>
+        <p><strong>Pre-snippet Text:</strong> ${snippet.preText || 'None'}</p>
+        <pre><code>${snippet.code || 'No code'}</code></pre>
+        <p><strong>Post-snippet Text:</strong> ${snippet.postText || 'None'}</p>
+        <p><strong>Line Number:</strong> ${snippet.lineNumber || 'Not specified'}</p>
+    `;
 }
 
 function saveSnippet() {
@@ -51,6 +100,7 @@ function saveSnippet() {
 
     saveSnippets();
     updateSnippetControls();
+    updatePreview(snippet);
     resetEditor();
 }
 
@@ -61,6 +111,7 @@ function resetEditor() {
     document.getElementById('snippetCode').value = '';
     document.getElementById('postSnippetText').value = '';
     document.getElementById('lineNumber').value = '';
+    document.getElementById('previewContent').innerHTML = '';
 }
 
 document.getElementById('addSnippetBtn').addEventListener('click', resetEditor);
