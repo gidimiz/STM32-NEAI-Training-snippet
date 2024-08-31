@@ -13,10 +13,11 @@ function displayCurrentSnippet() {
     if (snippets.length === 0) return;
 
     const snippet = snippets[currentSnippetIndex];
+    document.getElementById('lineNumber').textContent = `Paste at line: ${snippet.lineNumber}`;
     document.getElementById('preSnippetText').textContent = snippet.preText;
     document.getElementById('codeSnippet').textContent = snippet.code;
     document.getElementById('postSnippetText').textContent = snippet.postText;
-    document.getElementById('lineNumber').textContent = `Paste at line: ${snippet.lineNumber}`;
+    applyHighlighting();
 }
 
 function copyCodeToClipboard() {
@@ -30,7 +31,9 @@ function copyCodeToClipboard() {
     alert('Code copied to clipboard!');
 }
 
-document.getElementById('copyButton').addEventListener('click', copyCodeToClipboard);
+function refreshSnippet() {
+    loadSnippets();
+}
 
 // Simple syntax highlighting
 function highlightSyntax(code) {
@@ -49,7 +52,10 @@ function applyHighlighting() {
     codeElement.innerHTML = highlightSyntax(codeElement.textContent);
 }
 
-window.addEventListener('load', () => {
-    loadSnippets();
-    applyHighlighting();
-});
+document.getElementById('copyButton').addEventListener('click', copyCodeToClipboard);
+document.getElementById('refreshButton').addEventListener('click', refreshSnippet);
+
+window.addEventListener('load', loadSnippets);
+
+// Check for updates every 5 seconds
+setInterval(loadSnippets, 5000);

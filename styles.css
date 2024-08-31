@@ -6,25 +6,26 @@ body {
     background-color: #f4f4f4;
 }
 
-h1, h2 {
+h1 {
     color: #333;
 }
 
 #snippetContainer {
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
     margin-bottom: 20px;
 }
 
 #codeSnippet {
     background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    border-radius: 3px;
+    border-left: 3px solid #4CAF50;
     padding: 10px;
     white-space: pre-wrap;
     word-wrap: break-word;
+    font-family: monospace;
+}
+
+#lineNumber {
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 button {
@@ -41,33 +42,12 @@ button {
     border-radius: 3px;
 }
 
-#snippetControls {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.snippet-control {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    padding: 5px;
-    cursor: move;
-}
-
-.snippet-control button {
+#snippetControls button {
     margin-right: 10px;
+    margin-bottom: 10px;
 }
 
-.snippet-control span {
-    font-size: 0.9em;
-    color: #666;
-}
-
-#snippetEditor, #snippetPreview {
+#snippetEditor {
     background-color: white;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -83,16 +63,4 @@ button {
 #snippetEditor textarea {
     width: 100%;
     height: 100px;
-}
-
-#previewContent {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    padding: 10px;
-}
-
-#previewContent pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
 }
