@@ -3,8 +3,10 @@ let currentSnippetIndex = 0;
 
 function loadSnippets() {
     const storedSnippets = localStorage.getItem('snippets');
+    const activeIndex = localStorage.getItem('activeSnippetIndex');
     if (storedSnippets) {
         snippets = JSON.parse(storedSnippets);
+        currentSnippetIndex = activeIndex ? parseInt(activeIndex) : 0;
         displayCurrentSnippet();
     }
 }
@@ -57,5 +59,5 @@ document.getElementById('refreshButton').addEventListener('click', refreshSnippe
 
 window.addEventListener('load', loadSnippets);
 
-// Check for updates every 5 seconds
-setInterval(loadSnippets, 5000);
+// Check for updates every 2 seconds
+setInterval(loadSnippets, 2000);
