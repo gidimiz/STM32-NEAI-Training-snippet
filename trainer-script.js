@@ -43,9 +43,6 @@ function updateSnippetControls() {
     });
 }
 
-function setActiveSnippet(index) {
-    localStorage.setItem('activeSnippetIndex', index);
-}
 
 function dragStart(e) {
     e.dataTransfer.setData('text/plain', e.target.getAttribute('data-index'));
@@ -119,6 +116,10 @@ function resetEditor() {
     document.getElementById('postSnippetText').value = '';
     document.getElementById('lineNumber').value = '';
     document.getElementById('previewContent').innerHTML = '';
+}
+
+function setActiveSnippet(index) {
+    localStorage.setItem('activeSnippetIndex', index);
 }
 
 document.getElementById('addSnippetBtn').addEventListener('click', resetEditor);
