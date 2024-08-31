@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STM32 NEAI Training - Trainer Control Panel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="trainerControl">
+        <h1>Trainer Control Panel</h1>
+        <div id="snippetControls"></div>
+        <button id="addSnippetBtn">Add Snippet</button>
+        <div id="snippetEditor">
+            <h2>Edit Snippet</h2>
+            <label for="snippetTitle">Title:</label>
+            <input type="text" id="snippetTitle">
+            <label for="preSnippetText">Pre-snippet Text:</label>
+            <textarea id="preSnippetText"></textarea>
+            <label for="snippetCode">Code:</label>
+            <textarea id="snippetCode"></textarea>
+            <label for="postSnippetText">Post-snippet Text:</label>
+            <textarea id="postSnippetText"></textarea>
+            <label for="lineNumber">Line Number:</label>
+            <input type="number" id="lineNumber">
+            <button id="saveSnippetBtn">Save Snippet</button>
+        </div>
+    </div>
+    <script src="trainer-script.js"></script>
+</body>
+</html>
